@@ -1,4 +1,12 @@
 {
-    "presets": ["env", "react", "stage-1"],
-    "plugins": ["react-require"]
+    "env": {
+        "development": {
+            "presets": [["env", {"modules": false}], "react", "stage-1"],
+            "plugins": ["react-require", "add-react-displayname"]
+        },
+        "production": {
+            "presets": [["env", {"modules": false}], "react", "stage-1"],
+            "plugins": ["react-require", "add-react-displayname", "lodash", "external-helpers"]
+        }
+    }
 }

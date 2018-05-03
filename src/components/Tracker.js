@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
+import {createMemoizer} from '../utils';
 import {Provider} from './TrackerContext';
 
 const createTrackerContext = (collect, provider) => {
@@ -36,7 +37,7 @@ class Tracker extends Component {
         provider: PropTypes.object.isRequired
     };
 
-    tracker = null;
+    createTracker = createMemoizer(createTrackerContext);
 
     componentDidMount() {
         const {provider} = this.props;
@@ -61,7 +62,7 @@ class Tracker extends Component {
 
     render() {
         const {collect, provider, children} = this.props;
-        const tracker = createTrackerContext(collect, provider);
+        const tracker = this.createTracker(collect, provider);
 
         return (
             <Provider value={tracker}>

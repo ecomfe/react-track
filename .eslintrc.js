@@ -1,3 +1,3 @@
 module.exports = {
-    extends: '@ee-fe/eslint-config'
+    extends: '@ecomfe/eslint-config/strict'
 };
