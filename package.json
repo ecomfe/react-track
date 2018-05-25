@@ -1,6 +1,6 @@
 {
   "name": "@ecomfe/react-track",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A declarative, component based solution to track page views and user events with react & react-router",
   "main": "cjs/index.js",
   "module": "es/index.js",
