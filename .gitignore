@@ -60,3 +60,4 @@ typings/
 /cjs
 /es
 .DS_Store
+.idea

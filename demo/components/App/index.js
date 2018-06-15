@@ -2,6 +2,7 @@ import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
 import {noop} from 'lodash';
 import {Tracker, TrackEvent, TrackRoute, combineCollects, browser, context, session} from '@ee-fe/react-track';
+import AboutMe from '../AboutMe';
 import './index.css';
 
 const app = {
@@ -81,9 +82,7 @@ export default class App extends PureComponent {
                             <TrackRoute exact path="/console">
                                 <h2>Admin Console</h2>
                             </TrackRoute>
-                            <TrackRoute exact path="/about">
-                                <h2>About ME</h2>
-                            </TrackRoute>
+                            <Route exact path="/about" component={AboutMe} />
                         </Switch>
                     </div>
                 </BrowserRouter>

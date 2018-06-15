@@ -1,0 +1,1 @@
+export trackPageView from './trackPageView';
