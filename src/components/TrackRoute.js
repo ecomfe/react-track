@@ -1,10 +1,11 @@
+import {Route, withRouter} from 'react-router-dom';
 import {Consumer} from './TrackerContext';
 import TrackPageView from './TrackPageView';
 
-const TrackRoute = props => (
+const TrackPageRoute = withRouter(TrackPageView);
+
+export default props => (
     <Consumer>
-        {tracker => <TrackPageView {...props} tracker={tracker} />}
+        {tracker => (<TrackPageRoute {...props} tracker={tracker} ComponentIn={Route} />)}
     </Consumer>
 );
-
-export default TrackRoute;
