@@ -1,8 +1,7 @@
-import {Consumer} from '../components/TrackerContext';
-import TrackPageView from '../components/TrackPageView';
+import TrackRoute from '../components/TrackRoute';
 
 export default ComponentIn => props => (
-    <Consumer>
-        {tracker => <TrackPageView {...props} ComponentIn={ComponentIn} tracker={tracker} />}
-    </Consumer>
+    <TrackRoute>
+        <ComponentIn {...props} />
+    </TrackRoute>
 );

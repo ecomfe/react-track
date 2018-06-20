@@ -76,12 +76,16 @@ export default class App extends PureComponent {
                             </ol>
                         </div>
                         <Switch>
-                            <TrackRoute exact path="/">
-                                <h2>Home</h2>
-                            </TrackRoute>
-                            <TrackRoute exact path="/console">
-                                <h2>Admin Console</h2>
-                            </TrackRoute>
+                            <Route exact path="/">
+                                <TrackRoute >
+                                    <h2>Home</h2>
+                                </TrackRoute>
+                            </Route>
+                            <Route exact path="/console">
+                                <TrackRoute>
+                                    <h2>Admin Console</h2>
+                                </TrackRoute>
+                            </Route>
                             <Route exact path="/about" component={AboutMe} />
                         </Switch>
                     </div>
