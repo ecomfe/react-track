@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import {withRouter} from 'react-router-dom';
+import {Consumer} from './TrackerContext';
 
 class TrackPageView extends Component {
 
@@ -24,4 +25,10 @@ class TrackPageView extends Component {
     }
 }
 
-export default withRouter(TrackPageView);
+const TrackPageViewWithRouter = withRouter(TrackPageView);
+
+export default props => (
+    <Consumer>
+        {tracker => (<TrackPageViewWithRouter {...props} tracker={tracker} />)}
+    </Consumer>
+);

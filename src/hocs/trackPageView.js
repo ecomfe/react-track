@@ -1,7 +1,7 @@
-import TrackRoute from '../components/TrackRoute';
+import TrackPageView from '../components/TrackPageView';
 
 export default ComponentIn => props => (
-    <TrackRoute>
+    <TrackPageView>
         <ComponentIn {...props} />
-    </TrackRoute>
+    </TrackPageView>
 );

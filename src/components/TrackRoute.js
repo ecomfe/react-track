@@ -1,8 +1,8 @@
-import {Consumer} from './TrackerContext';
+import {Route} from 'react-router-dom';
 import TrackPageView from './TrackPageView';
 
 export default props => (
-    <Consumer>
-        {tracker => (<TrackPageView {...props} tracker={tracker} />)}
-    </Consumer>
+    <TrackPageView>
+        <Route {...props} />
+    </TrackPageView>
 );
