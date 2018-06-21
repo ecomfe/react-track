@@ -1,5 +1,5 @@
 // import {trackPageView} from '@ee-fe/react-track';
-import {trackPageView} from '../../../src/hocs';
+import {trackPageView} from '../../../src';
 import './index.css';
 
 const AboutMe = () => (

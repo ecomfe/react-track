@@ -1,9 +1,7 @@
 import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
 import {noop} from 'lodash';
-import {Tracker, TrackEvent, combineCollects, browser, context, session} from '@ee-fe/react-track';
-import TrackRoute from '../../../src/components/TrackRoute';
-import {trackEvent} from '../../../src/hocs';
+import {Tracker, TrackRoute, TrackEvent, trackEvent, combineCollects, browser, context, session} from '../../../src';
 import AboutMe from '../AboutMe';
 import Console from '../Console';
 import Service from '../Service';

@@ -1,7 +1,7 @@
 import {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {noop} from 'lodash';
-import {trackEvent} from '../../../src/hocs';
+import {trackEvent} from '../../../src';
 
 const Input = trackEvent({
     eventPropName: 'onChange',
