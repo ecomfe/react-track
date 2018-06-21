@@ -1,6 +1,6 @@
 import {Component} from 'react';
-import {Route, withRouter} from 'react-router-dom';
-import {omit} from 'lodash';
+import {withRouter} from 'react-router-dom';
+import {Consumer} from './TrackerContext';
 
 class TrackPageView extends Component {
 
@@ -21,10 +21,14 @@ class TrackPageView extends Component {
     }
 
     render() {
-        const childProps = omit(this.props, ['location', 'match', 'history', 'tracker']);
-
-        return <Route {...childProps} />;
+        return this.props.children;
     }
 }
 
-export default withRouter(TrackPageView);
+const TrackPageViewWithRouter = withRouter(TrackPageView);
+
+export default props => (
+    <Consumer>
+        {tracker => (<TrackPageViewWithRouter {...props} tracker={tracker} />)}
+    </Consumer>
+);

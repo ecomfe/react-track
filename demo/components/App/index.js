@@ -1,7 +1,12 @@
 import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
 import {noop} from 'lodash';
-import {Tracker, TrackEvent, TrackRoute, combineCollects, browser, context, session} from '@ee-fe/react-track';
+import {Tracker, TrackRoute, TrackEvent, trackEvent, combineCollects, browser, context, session} from '../../../src';
+import AboutMe from '../AboutMe';
+import Console from '../Console';
+import Service from '../Service';
+import Select from '../Select';
+import NameInput from '../NameInput';
 import './index.css';
 
 const app = {
@@ -34,10 +39,32 @@ const NavItem = ({name, to}) => (
     </TrackEvent>
 );
 
+const fruitOptions = [{
+    value: 'grapefruit',
+    name: 'Grapefruit'
+}, {
+    value: 'lime',
+    name: 'Lime'
+}, {
+    value: 'coconut',
+    name: 'Coconut'
+}, {
+    value: 'mango',
+    name: 'Mango'
+}];
+
+const TrackEventSelect = trackEvent({
+    eventPropName: 'onChange',
+    category: 'select',
+    action: 'change',
+    label: 'Fruit'
+})(Select);
+
 export default class App extends PureComponent {
 
     state = {
-        logs: []
+        logs: [],
+        name: ''
     };
 
     trackProvider = {
@@ -54,8 +81,14 @@ export default class App extends PureComponent {
         }
     };
 
+    onNameChange = value => {
+        this.setState({
+            name: value
+        });
+    };
+
     render() {
-        const {logs} = this.state;
+        const {logs, name} = this.state;
 
         return (
             <Tracker collect={collect} provider={this.trackProvider}>
@@ -65,26 +98,35 @@ export default class App extends PureComponent {
                             <ul>
                                 <NavItem to="/" name="Home" />
                                 <NavItem to="/console" name="Console" />
+                                <NavItem to="/service" name="Service" />
                                 <NavItem to="/about" name="About" />
                             </ul>
                         </nav>
+                        <Switch>
+                            <TrackRoute exact path="/" >
+                                <div>
+                                    <h2>Home</h2>
+                                    <div>
+                                        <label>Fruit: </label>
+                                        <TrackEventSelect options={fruitOptions} defaultValue="coconut" />
+                                    </div>
+                                    <div>
+                                        <label>UserName: </label>
+                                        <NameInput onNameChange={this.onNameChange} />
+                                    </div>
+                                </div>
+                            </TrackRoute>
+                            <TrackRoute exact path="/console" component={Console} />
+                            <TrackRoute exact path="/service" render={() => <Service />} />
+                            <Route exact path="/about" component={AboutMe} />
+                        </Switch>
                         <div>
+                            <h3>UserName: {name}</h3>
                             <h3>Logs</h3>
                             <ol>
-                                {logs.map((log, i) => <li key={i}>{log.type} - {log.message}</li>)}
+                                {logs.concat().reverse().map((log, i) => <li key={i}>{log.type} - {log.message}</li>)}
                             </ol>
                         </div>
-                        <Switch>
-                            <TrackRoute exact path="/">
-                                <h2>Home</h2>
-                            </TrackRoute>
-                            <TrackRoute exact path="/console">
-                                <h2>Admin Console</h2>
-                            </TrackRoute>
-                            <TrackRoute exact path="/about">
-                                <h2>About ME</h2>
-                            </TrackRoute>
-                        </Switch>
                     </div>
                 </BrowserRouter>
             </Tracker>
