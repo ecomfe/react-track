@@ -6,7 +6,7 @@ const autoExternal = require('rollup-plugin-auto-external');
 const sourcemaps = require('rollup-plugin-sourcemaps');
 const babel = require('rollup-plugin-babel');
 const eslint = require('rollup-plugin-eslint');
-const uglify = require('rollup-plugin-uglify');
+const {terser} = require('rollup-plugin-terser');
 
 
 const inputOptions = {
@@ -19,7 +19,7 @@ const inputOptions = {
         sourcemaps(),
         eslint(),
         babel({exclude: 'node_modules/**'}),
-        uglify()
+        terser()
     ]
 };
 
