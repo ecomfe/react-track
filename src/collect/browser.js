@@ -1,7 +1,7 @@
 import platform from 'platform';
 
 export default () => {
-    const ua = platform.parse(navigator.userAgent);
+    const {ua, name, version, os} = platform.parse(navigator.userAgent);
 
     return type => {
         if (type !== 'pageView') {
@@ -15,12 +15,12 @@ export default () => {
                 height: screen.height
             },
             os: {
-                family: ua.os.family,
-                version: ua.os.version
+                family: os.family,
+                version: os.version
             },
             browser: {
-                name: ua.name,
-                version: ua.version.match(/\d+/)[0]
+                name: name,
+                version: version
             },
             language: navigator.language
         };
