@@ -40,13 +40,13 @@ const createTrackerContext = (collect, provider) => {
     let currentLocation = null;
 
     return {
-        trackPageView(location) {
+        trackPageView(location, {path}) {
             const referrer = currentLocation;
-            currentLocation = location;
+            currentLocation = {...location, path};
             const data = {
                 ...collect('pageView', location),
-                referrer,
-                location
+                referrer: referrer,
+                location: currentLocation
             };
 
             provider.trackPageView(data);

@@ -1,5 +1,7 @@
 import './index.css';
 
-export default () => (
+const Console = () => (
     <h2>Console</h2>
 );
+
+export default Console;

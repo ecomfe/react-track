@@ -2,7 +2,7 @@ import {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Consumer} from './TrackerContext';
 
-class TrackPageView extends Component {
+class TrackPageViewCore extends Component {
 
     componentDidMount() {
         this.trackPageView();
@@ -15,9 +15,9 @@ class TrackPageView extends Component {
     }
 
     trackPageView() {
-        const {location, tracker} = this.props;
+        const {location, match, tracker} = this.props;
 
-        tracker.trackPageView(location);
+        tracker.trackPageView(location, match);
     }
 
     render() {
@@ -25,10 +25,12 @@ class TrackPageView extends Component {
     }
 }
 
-const TrackPageViewWithRouter = withRouter(TrackPageView);
+const TrackPageViewWithRouter = withRouter(TrackPageViewCore);
 
-export default props => (
+const TrackPageView = props => (
     <Consumer>
         {tracker => (<TrackPageViewWithRouter {...props} tracker={tracker} />)}
     </Consumer>
 );
+
+export default TrackPageView;

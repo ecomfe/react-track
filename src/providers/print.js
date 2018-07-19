@@ -5,14 +5,14 @@
 
 import {noop} from 'lodash';
 
-const formatURL = ({pathname, search, hash}) => {
+const formatURL = ({pathname, search, hash, path}) => {
     const parts = [
         pathname,
         search ? '?' + search : '',
         hash ? '#' + hash : ''
     ];
 
-    return parts.join('');
+    return parts.join('') + '(' + path + ')';
 };
 
 /* eslint-disable no-console */
