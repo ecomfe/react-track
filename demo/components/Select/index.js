@@ -28,11 +28,15 @@ export default class Select extends React.PureComponent {
         this.props.onChange(value);
     };
 
+    handleClick = () => {
+        this.props.onClick();
+    }
+
     render() {
         const {options} = this.props;
 
         return (
-            <select value={this.state.value} onChange={this.handleChange} >
+            <select value={this.state.value} onChange={this.handleChange} onClick={this.handleClick} >
                 {options.map(option => (
                     <option key={option.value} value={option.value} >
                         {option.name}

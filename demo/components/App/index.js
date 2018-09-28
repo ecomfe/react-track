@@ -1,5 +1,6 @@
 import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
+import {compose} from 'recompose';
 import {noop} from 'lodash';
 import {Tracker, TrackRoute, TrackEvent, trackEvent, combineCollects, browser, context, session} from '../../../src';
 import AboutMe from '../AboutMe';
@@ -32,10 +33,12 @@ const appendLog = ({logs}, type, data) => {
 };
 
 const NavItem = ({name, to}) => (
-    <TrackEvent eventPropName="onMouseEnter" category="navigation" action="hover" label={name}>
-        <li>
-            <NavLink exact to={to} activeClassName="nav-link-active">{name}</NavLink>
-        </li>
+    <TrackEvent eventPropName="onMouseEnter" category="navigation" action="mouseEnter" label={name}>
+        <TrackEvent eventPropName="onMouseLeave" category="navigation" action="mouseLeave" label={name}>
+            <li>
+                <NavLink exact to={to} activeClassName="nav-link-active">{name}</NavLink>
+            </li>
+        </TrackEvent>
     </TrackEvent>
 );
 
@@ -53,12 +56,10 @@ const fruitOptions = [{
     name: 'Mango'
 }];
 
-const TrackEventSelect = trackEvent({
-    eventPropName: 'onChange',
-    category: 'select',
-    action: 'change',
-    label: 'Fruit'
-})(Select);
+const ComposedSelect = compose(
+    trackEvent({eventPropName: 'onChange', category: 'select', action: 'change', label: 'Fruit Select'}),
+    trackEvent({eventPropName: 'onClick', category: 'select', action: 'click', label: 'Fruit Click'})
+)(Select);
 
 export default class App extends PureComponent {
 
@@ -108,7 +109,7 @@ export default class App extends PureComponent {
                                     <h2>Home</h2>
                                     <div>
                                         <label>Fruit: </label>
-                                        <TrackEventSelect options={fruitOptions} defaultValue="coconut" />
+                                        <ComposedSelect options={fruitOptions} defaultValue="coconut" />
                                     </div>
                                     <div>
                                         <label>UserName: </label>
@@ -124,7 +125,11 @@ export default class App extends PureComponent {
                             <h3>UserName: {name}</h3>
                             <h3>Logs</h3>
                             <ol>
-                                {logs.concat().reverse().map((log, i) => <li key={i}>{log.type} - {log.message}</li>)}
+                                {logs.concat().reverse().map((log, i) =>
+                                    (
+                                        <li key={i}>{log.type} - {log.message}</li>
+                                    )
+                                )}
                             </ol>
                         </div>
                     </div>
