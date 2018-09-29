@@ -32,6 +32,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
+    "recompose": "^0.30.0",
     "rollup": "^0.62.0",
     "rollup-plugin-auto-external": "^1.2.0",
     "rollup-plugin-babel": "^3.0.7",

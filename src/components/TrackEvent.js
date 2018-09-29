@@ -27,7 +27,7 @@ export default class TrackEvent extends Component {
     };
 
     renderChildren(tracker) {
-        const {children, eventPropName, category, action, label} = this.props;
+        const {children, eventPropName, category, action, label, ...args} = this.props;
 
         if (!children || !children.props) {
             return children;
@@ -36,7 +36,7 @@ export default class TrackEvent extends Component {
         const callback = children.props[eventPropName] || noop;
         const trackedCallback = createTrackedCallback(callback, tracker, category, action, label);
 
-        return cloneElement(children, {[eventPropName]: trackedCallback});
+        return cloneElement(children, {...args, [eventPropName]: trackedCallback});
     }
 
     render() {
