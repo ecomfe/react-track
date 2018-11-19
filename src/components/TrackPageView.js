@@ -17,7 +17,7 @@ class TrackPageViewCore extends Component {
     trackPageView() {
         const {location, match, tracker} = this.props;
 
-        tracker.trackPageView(location, match);
+        tracker.trackPageView({...location, search: encodeURIComponent(location.search)}, match);
     }
 
     render() {
