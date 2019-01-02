@@ -245,13 +245,13 @@ const NavItem = ({name, to}) => (
 
 const track = action => {
     const options = {
-        evenetPropName: 'on' + action[0].toUpperCase() + action.slice(1),
+        eventPropName: 'on' + action[0].toUpperCase() + action.slice(1),
         category: 'navigation',
         action: action,
         label: null
     };
     
-    return trackEveent(options);
+    return trackEvent(options);
 };
 
 const enhance = compose(
