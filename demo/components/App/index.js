@@ -32,10 +32,15 @@ const appendLog = ({logs}, type, data) => {
     };
 };
 
+/* eslint-disable no-console */
+const handleMouseEnter = () => console.log('native onMouseEnter callback'); // TODO not called
+const handleMouseLeave = () => console.log('native onMouseLeave callback');
+/* eslint-enable no-console */
+
 const NavItem = ({name, to}) => (
     <TrackEvent eventPropName="onMouseEnter" category="navigation" action="mouseEnter" label={name}>
         <TrackEvent eventPropName="onMouseLeave" category="navigation" action="mouseLeave" label={name}>
-            <li>
+            <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <NavLink exact to={to} activeClassName="nav-link-active">{name}</NavLink>
             </li>
         </TrackEvent>
