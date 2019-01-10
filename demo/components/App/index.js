@@ -33,7 +33,7 @@ const appendLog = ({logs}, type, data) => {
 };
 
 /* eslint-disable no-console */
-const handleMouseEnter = () => console.log('native onMouseEnter callback'); // TODO not called
+const handleMouseEnter = () => console.log('native onMouseEnter callback');
 const handleMouseLeave = () => console.log('native onMouseLeave callback');
 /* eslint-enable no-console */
 

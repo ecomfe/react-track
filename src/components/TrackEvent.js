@@ -14,6 +14,8 @@ const createTrackedCallback = createMemoizer(trackEventCallback);
 
 export default class TrackEvent extends Component {
 
+    static displayName = 'TrackEvent'
+
     static propTypes = {
         eventPropName: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
@@ -27,16 +29,24 @@ export default class TrackEvent extends Component {
     };
 
     renderChildren(tracker) {
-        const {children, eventPropName, category, action, label, ...args} = this.props;
+        const {children, eventPropName, category, action, label, trackEvents = [], ...args} = this.props;
 
         if (!children || !children.props) {
             return children;
         }
 
-        const callback = children.props[eventPropName] || noop;
-        const trackedCallback = createTrackedCallback(callback, tracker, category, action, label);
+        trackEvents.push({eventPropName, category, action, label});
 
-        return cloneElement(children, {...args, [eventPropName]: trackedCallback});
+        if (!children.type || children.type.displayName !== 'TrackEvent') {
+            const callbacks = {}
+            trackEvents.forEach(({eventPropName, category, action, label}) => {
+                const callback = children.props[eventPropName] || noop;
+                callbacks[eventPropName] = createTrackedCallback(callback, tracker, category, action, label);
+            })
+            return cloneElement(children, {...args, ...callbacks});
+        }
+
+        return cloneElement(children, {...args, trackEvents});
     }
 
     render() {
