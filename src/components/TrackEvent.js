@@ -37,12 +37,12 @@ export default class TrackEvent extends Component {
 
         trackEvents.push({eventPropName, category, action, label});
 
-        if (!children.type || children.type.displayName !== 'TrackEvent') {
-            const callbacks = {}
+        if (children.type !== TrackEvent) {
+            const callbacks = {};
             trackEvents.forEach(({eventPropName, category, action, label}) => {
                 const callback = children.props[eventPropName] || noop;
                 callbacks[eventPropName] = createTrackedCallback(callback, tracker, category, action, label);
-            })
+            });
             return cloneElement(children, {...args, ...callbacks});
         }
 
