@@ -34,7 +34,13 @@ export default site => {
         uninstall() {
         },
 
-        trackPageView({location}) {
+        trackPageView({location, ...collects}) {
+            const tags = Object.keys(collects)
+                .filter(key => key.includes('holmesTag'))
+                .map(key => collects[key]);
+
+            _hmt.push(...tags);
+
             _hmt.push(['_trackPageview', formatURL(location)]);
         },
 

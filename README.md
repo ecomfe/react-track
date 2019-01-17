@@ -46,6 +46,7 @@ type collect = collectPageView | collectEvent;
 - `browser()`：添加浏览器相关的信息，包括UA、分辨率、操作系统、浏览器版本、系统语言。这个采集仅在类型为`pageView`时才会生效。
 - `context(env)`：将固定的`env`对象放到采集数据中去，常用于添加当前登录用户名、系统名称、系统版本等信息。
 - `session(storageKey)`：跟踪一次用户的访问，为每一次访问生成一个唯一的标识，并存放在`sessionStorage`中，这个唯一标识会变为名为`session`的属性值。可以通过`storageKey`来自定义`sessionStorage`中对应的键名。
+- `holmesTag`：百度统计的标签信息采集，用法详见：[holmesTag说明](./src/collect/holmesTag/README.md)
 
 当希望同时使用多个`collect`函数时，可以通过`combineCollects`将它们组合成一个函数。以下代码展示了如何使用多个`collect`函数，并通过`combineCollects`将它们组合成一个：
 
