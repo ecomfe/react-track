@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind, react/no-array-index-key */
 import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
 import {compose} from 'recompose';
@@ -8,11 +9,10 @@ import Console from '../Console';
 import Service from '../Service';
 import Select from '../Select';
 import NameInput from '../NameInput';
-import './index.css';
 
 const app = {
     app: 'react-track demo',
-    version: require('../../../package.json').version
+    version: require('../../../package.json').version, // eslint-disable-line global-require
 };
 
 const collect = combineCollects(
@@ -24,11 +24,11 @@ const collect = combineCollects(
 const appendLog = ({logs}, type, data) => {
     const item = {
         type,
-        message: type === 'pageView' ? data.location.pathname : `${data.category}:${data.action}:${data.label}`
+        message: type === 'pageView' ? data.location.pathname : `${data.category}:${data.action}:${data.label}`,
     };
 
     return {
-        logs: [...logs, item]
+        logs: [...logs, item],
     };
 };
 
@@ -44,16 +44,16 @@ const NavItem = ({name, to}) => (
 
 const fruitOptions = [{
     value: 'grapefruit',
-    name: 'Grapefruit'
+    name: 'Grapefruit',
 }, {
     value: 'lime',
-    name: 'Lime'
+    name: 'Lime',
 }, {
     value: 'coconut',
-    name: 'Coconut'
+    name: 'Coconut',
 }, {
     value: 'mango',
-    name: 'Mango'
+    name: 'Mango',
 }];
 
 const ComposedSelect = compose(
@@ -65,7 +65,7 @@ export default class App extends PureComponent {
 
     state = {
         logs: [],
-        name: ''
+        name: '',
     };
 
     trackProvider = {
@@ -79,12 +79,12 @@ export default class App extends PureComponent {
 
         trackEvent: data => {
             this.setState(state => appendLog(state, 'customEvent', data));
-        }
+        },
     };
 
     onNameChange = value => {
         this.setState({
-            name: value
+            name: value,
         });
     };
 

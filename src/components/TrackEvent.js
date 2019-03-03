@@ -19,11 +19,11 @@ export default class TrackEvent extends Component {
         category: PropTypes.string.isRequired,
         action: PropTypes.string.isRequired,
         label: PropTypes.string,
-        children: PropTypes.element.isRequired
+        children: PropTypes.element.isRequired,
     };
 
     static defaultProps = {
-        label: null
+        label: null,
     };
 
     renderChildren(tracker) {

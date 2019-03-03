@@ -1,5 +1,3 @@
-import './index.css';
-
 const Console = () => (
     <h2>Console</h2>
 );

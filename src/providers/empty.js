@@ -9,7 +9,7 @@ const provider = {
     install: noop,
     uninstall: noop,
     trackPageView: noop,
-    trackEvent: noop
+    trackEvent: noop,
 };
 
 export default () => provider;

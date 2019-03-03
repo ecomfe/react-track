@@ -12,7 +12,7 @@ const formatURL = ({pathname, search, hash}) => {
     const parts = [
         pathname,
         search ? '?' + search : '',
-        hash ? '#' + hash : ''
+        hash ? '#' + hash : '',
     ];
 
     return parts.join('');
@@ -40,6 +40,6 @@ export default site => {
 
         trackEvent({category, action, label}) {
             _hmt.push(['_trackEvent', category, action, label]);
-        }
+        },
     };
 };

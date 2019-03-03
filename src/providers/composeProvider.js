@@ -10,6 +10,6 @@ export default (...providers) => {
         install: chain('install'),
         uninstall: chain('uninstall'),
         trackPageView: chain('trackPageView'),
-        trackEvent: chain('trackEvent')
+        trackEvent: chain('trackEvent'),
     };
 };

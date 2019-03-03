@@ -12,17 +12,17 @@ export default () => {
             userAgent: ua,
             resolution: {
                 width: screen.width,
-                height: screen.height
+                height: screen.height,
             },
             os: {
                 family: os.family,
-                version: os.version
+                version: os.version,
             },
             browser: {
                 name: name,
-                version: version
+                version: version,
             },
-            language: navigator.language
+            language: navigator.language,
         };
     };
 };

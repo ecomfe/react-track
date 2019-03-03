@@ -32,7 +32,7 @@ const createLazyProvider = inner => {
             queue.length = 0;
         },
         trackPageView: queueBeforeInstall('trackPageView'),
-        trackEvent: queueBeforeInstall('trackEvent')
+        trackEvent: queueBeforeInstall('trackEvent'),
     };
 };
 
@@ -46,7 +46,7 @@ const createTrackerContext = (collect, provider) => {
             const data = {
                 ...collect('pageView', location),
                 referrer: referrer,
-                location: currentLocation
+                location: currentLocation,
             };
 
             provider.trackPageView(data);
@@ -55,11 +55,11 @@ const createTrackerContext = (collect, provider) => {
         trackEvent(event) {
             const data = {
                 ...collect('event'),
-                ...event
+                ...event,
             };
 
             provider.trackEvent(data);
-        }
+        },
     };
 };
 
@@ -67,12 +67,12 @@ class Tracker extends Component {
 
     static propTypes = {
         collect: PropTypes.func.isRequired,
-        provider: PropTypes.object.isRequired
+        provider: PropTypes.object.isRequired,
     };
 
     state = {
         sourceProvider: null,
-        provider: null
+        provider: null,
     };
 
     getTracker = createMemoizer(createTrackerContext);
@@ -86,7 +86,7 @@ class Tracker extends Component {
 
         return {
             sourceProvider: provider,
-            provider: createLazyProvider(provider)
+            provider: createLazyProvider(provider),
         };
     }
 

@@ -7,23 +7,23 @@ const Input = trackEvent({
     eventPropName: 'onChange',
     category: 'input',
     action: 'change',
-    label: 'Name'
+    label: 'Name',
 })('input');
 
 export default class NameInput extends PureComponent {
     static propTypes = {
-        onNameChange: PropTypes.func
+        onNameChange: PropTypes.func,
     };
 
     static defaultProps = {
-        onNameChange: noop
+        onNameChange: noop,
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: ''
+            value: '',
         };
     }
 

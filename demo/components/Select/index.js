@@ -6,18 +6,18 @@ export default class Select extends React.PureComponent {
     static propTypes = {
         defaultValue: PropTypes.string.isRequired,
         options: PropTypes.array.isRequired,
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
     };
 
     static defaultProps = {
-        onChange: noop
+        onChange: noop,
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: props.defaultValue
+            value: props.defaultValue,
         };
     }
 

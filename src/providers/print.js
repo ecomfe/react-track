@@ -9,7 +9,7 @@ const formatURL = ({pathname, search, hash, path}) => {
     const parts = [
         pathname,
         search ? '?' + search : '',
-        hash ? '#' + hash : ''
+        hash ? '#' + hash : '',
     ];
 
     return parts.join('') + '(' + path + ')';
@@ -33,6 +33,6 @@ export default () => {
 
         trackEvent({category, action, label}) {
             console.log(`[Track] Receive custom event ${category}:${action}:${label}`);
-        }
+        },
     };
 };
