@@ -29,6 +29,7 @@ export default class TrackEvent extends Component {
     renderChildren(tracker) {
         const {children, eventPropName, category, action, label, ...args} = this.props;
 
+        /* istanbul ignore next line */
         if (!children || !children.props) {
             return children;
         }

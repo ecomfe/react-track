@@ -12,4 +12,4 @@ const provider = {
     trackEvent: noop,
 };
 
-export default () => provider;
+export default /* istanbul ignore next */ () => provider;

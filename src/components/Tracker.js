@@ -96,6 +96,7 @@ class Tracker extends Component {
         provider.install();
     }
 
+    /* istanbul ignore next line */
     componentDidUpdate(prevProps) {
         const {provider} = this.props;
 
