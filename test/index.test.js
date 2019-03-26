@@ -294,7 +294,7 @@ describe('test hocs', () => {
         expect(mockTrackPageView.mock.calls.length).toEqual(1);
     });
 
-    // TODO: this not work
+    // TODO: 这个测试不通过
     // test('should invoke trackEvent after component mount', () => {
     //     wrapper.find('div.event').simulate('click');
     //     expect(mocktrackEvent.mock.calls.length).toEqual(1);

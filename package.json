@@ -28,7 +28,9 @@
     "test": "skr test --target=react --coverage",
     "start": "skr dev --src=demo",
     "build": "skr rollup --clean",
-    "prepublishOnly": "yarn run build"
+    "report-cov": "cat coverage/lcov.info | coveralls",
+    "ci": "yarn test && yarn run build",
+    "prepublishOnly": "yarn run ci"
   },
   "files": [
     "cjs",
