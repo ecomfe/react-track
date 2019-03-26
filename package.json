@@ -14,7 +14,7 @@
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
     "recompose": "^0.30.0",
-    "reskript": "^0.10.2",
+    "reskript": "^0.13.0",
     "uuid": "^3.3.2",
     "webpack": "^4.16.0"
   },
@@ -50,5 +50,8 @@
   "bugs": {
     "url": "https://github.com/otakustay/react-track/issues"
   },
-  "homepage": "https://github.com/otakustay/react-track#readme"
+  "homepage": "https://github.com/otakustay/react-track#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.0"
+  }
 }

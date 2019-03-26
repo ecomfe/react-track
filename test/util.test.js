@@ -1,21 +1,15 @@
 import {isFunction} from 'lodash';
 import {createMemoizer} from '../src/utils';
 
-test('createMemoizer', () => {
-    const selectUser = ({user}, username, age) => ({...user, username, age});
+test('test createMemoizer', () => {
+    const selectUser = ({a}, b, c) => ({a, b, c});
     const memoizeSelectUser = createMemoizer(selectUser);
     expect(isFunction(memoizeSelectUser)).toBe(true);
 
-    const userData = {user: {username: 'user', age: 21}};
-    const userSelected = memoizeSelectUser(userData, 'admin');
-    expect(userSelected).toEqual({username: 'admin', age: undefined});
+    const data = {a: 1, b: 2, c: 3};
+    const seleted1 = memoizeSelectUser(data, 2, 3);
+    expect(seleted1).toEqual({a: 1, b: 2, c: 3});
 
-    const anotherUserSelected = memoizeSelectUser(userData, 'admin');
-    expect(userSelected === anotherUserSelected).toBe(true);
-
-    const memberUserSelected = memoizeSelectUser(userData, 'member');
-    expect(userSelected === memberUserSelected).toBe(false);
-
-    const customAdminUserSelected = memoizeSelectUser(userData, 'admin', 18);
-    expect(userSelected === customAdminUserSelected).toBe(false);
+    const seleted2 = memoizeSelectUser(data, 2, 3);
+    expect(seleted1 === seleted2).toBe(true);
 });

@@ -243,7 +243,11 @@ describe('test homles', () => {
 });
 
 describe('test hocs', () => {
-    const EventComponentIn = () => <div className="event">Event</div>;
+    const EventComponentIn = props => (
+        <div className="event" {...props}>
+            Event
+        </div>
+    );
     const TrackEventComponent = trackEvent({
         eventPropName: 'onClick',
         category: 'category',
@@ -294,11 +298,10 @@ describe('test hocs', () => {
         expect(mockTrackPageView.mock.calls.length).toEqual(1);
     });
 
-    // TODO: 这个测试不通过
-    // test('should invoke trackEvent after component mount', () => {
-    //     wrapper.find('div.event').simulate('click');
-    //     expect(mocktrackEvent.mock.calls.length).toEqual(1);
-    // });
+    test('should invoke trackEvent after component mount', () => {
+        wrapper.find('div.event').simulate('click');
+        expect(mocktrackEvent.mock.calls.length).toEqual(1);
+    });
 
     test('should invoke install after component unmount', () => {
         wrapper.unmount();
