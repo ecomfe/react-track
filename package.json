@@ -6,6 +6,7 @@
   "module": "es/index.js",
   "sideEffects": false,
   "devDependencies": {
+    "@babel/polyfill": "^7.4.0",
     "coveralls": "^3.0.3",
     "lodash": "^4.17.10",
     "mock-local-storage": "^1.1.8",
