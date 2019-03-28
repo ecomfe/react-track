@@ -9,7 +9,8 @@ const formatURL = ({pathname, search, hash, path}) => {
     const parts = [
         pathname,
         search ? '?' + search : '',
-        hash ? '#' + hash : '',
+        // hash不需要加#号
+        hash ? hash : '',
     ];
 
     return parts.join('') + '(' + path + ')';
