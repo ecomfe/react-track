@@ -4,8 +4,9 @@
  */
 
 import {noop} from 'lodash';
+import {CollectLocation, TrackerProvider} from '../types';
 
-const formatURL = ({pathname, search, hash, path}) => {
+const formatURL = ({pathname, search, hash, path}: CollectLocation): string => {
     const parts = [
         pathname,
         search ? '?' + search : '',
@@ -17,7 +18,7 @@ const formatURL = ({pathname, search, hash, path}) => {
 };
 
 /* eslint-disable no-console */
-export default () => {
+export default (): TrackerProvider => {
     return {
         install: noop,
 
@@ -35,5 +36,5 @@ export default () => {
         trackEvent({category, action, label}) {
             console.log(`[Track] Receive custom event ${category}:${action}:${label}`);
         },
-    };
+    } as TrackerProvider;
 };

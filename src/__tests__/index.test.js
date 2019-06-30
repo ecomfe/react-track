@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved, no-console, react/jsx-no-bind, no-undef */
 import {MemoryRouter as Router, NavLink, Switch} from 'react-router-dom';
 import {noop} from 'lodash';
 import {mount} from 'enzyme';
@@ -15,7 +16,7 @@ import {
     holmes,
     trackEvent,
     trackPageView,
-} from '../src';
+} from '..';
 
 let consoleMessage = '';
 const log = console.log;
@@ -23,7 +24,7 @@ const mockLogHandler = jest.fn((...inputs) => {
     log(...inputs);
     consoleMessage = inputs[0];
 });
-/* tslint:disable-next-line */
+
 console.log = mockLogHandler;
 
 const uuidRegex = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);

@@ -1,13 +1,14 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {createMemoizer} from '../utils';
 import {Provider} from './TrackerContext';
+import {TrackerCollect, TrackerProvider, CollectLocation} from '../types';
 
-const createLazyProvider = inner => {
-    let installed = false;
-    const queue = [];
+const createLazyProvider = (inner: TrackerProvider): TrackerProvider => {
+    let installed: boolean = false;
+    const queue: [string, any][] = [];
 
-    const queueBeforeInstall = name => (...args) => {
+    const queueBeforeInstall = (name: string) => (...args: any) => {
         if (installed) {
             inner[name](...args);
         }
@@ -36,7 +37,7 @@ const createLazyProvider = inner => {
     };
 };
 
-const createTrackerContext = (collect, provider) => {
+const createTrackerContext = (collect: TrackerCollect<CollectLocation>, provider: TrackerProvider): TrackerProvider => {
     let currentLocation = null;
 
     return {
@@ -63,8 +64,17 @@ const createTrackerContext = (collect, provider) => {
     };
 };
 
-class Tracker extends Component {
+interface TrackerProperties {
+    collect: TrackerCollect<unknown>;
+    provider: TrackerProvider;
+}
 
+interface TrackerStates {
+    sourceProvider: TrackerProvider | null;
+    provider: TrackerProvider | null;
+}
+
+class Tracker extends Component<TrackerProperties, TrackerStates> {
     static propTypes = {
         collect: PropTypes.func.isRequired,
         provider: PropTypes.object.isRequired,
@@ -117,11 +127,7 @@ class Tracker extends Component {
         const {provider} = this.state;
         const tracker = this.getTracker(collect, provider);
 
-        return (
-            <Provider value={tracker}>
-                {children}
-            </Provider>
-        );
+        return <Provider value={tracker}>{children}</Provider>;
     }
 }
 

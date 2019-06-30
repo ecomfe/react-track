@@ -2,8 +2,9 @@
  * @file 将多个Provider合并为一个
  * @author zhanglili
  */
+import {TrackerProvider} from '../types';
 
-export default (...providers) => {
+export default (...providers: TrackerProvider[]): TrackerProvider => {
     const chain = name => (...args) => providers.forEach(provider => provider[name](...args));
 
     return {
@@ -11,5 +12,5 @@ export default (...providers) => {
         uninstall: chain('uninstall'),
         trackPageView: chain('trackPageView'),
         trackEvent: chain('trackEvent'),
-    };
+    } as TrackerProvider;
 };

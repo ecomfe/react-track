@@ -1,10 +1,17 @@
-import {Component, cloneElement} from 'react';
+import React, {Component, cloneElement, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import {noop} from 'lodash';
 import {createMemoizer} from '../utils';
 import {Consumer} from './TrackerContext';
+import {TrackerProvider, CollectEvent} from '../types';
 
-const trackEventCallback = (previousPropValue, tracker, category, action, label) => (...args) => {
+const trackEventCallback = (
+    previousPropValue: (...args: unknown[]) => void,
+    tracker: TrackerProvider,
+    category: string,
+    action: string,
+    label: string
+) => (...args: unknown[]) => {
     tracker.trackEvent({category, action, label});
 
     return previousPropValue(...args);
@@ -12,8 +19,12 @@ const trackEventCallback = (previousPropValue, tracker, category, action, label)
 
 const createTrackedCallback = createMemoizer(trackEventCallback);
 
-export default class TrackEvent extends Component {
+export interface TrackEventPropeties extends CollectEvent {
+    eventPropName: string;
+    children: ReactElement;
+}
 
+export default class TrackEvent extends Component<TrackEventPropeties> {
     static propTypes = {
         eventPropName: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
@@ -41,11 +52,6 @@ export default class TrackEvent extends Component {
     }
 
     render() {
-
-        return (
-            <Consumer>
-                {tracker => this.renderChildren(tracker)}
-            </Consumer>
-        );
+        return <Consumer>{tracker => this.renderChildren(tracker)}</Consumer>;
     }
 }

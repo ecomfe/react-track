@@ -1,9 +1,13 @@
 import {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {Consumer} from './TrackerContext';
+import {TrackerProvider} from '../types';
 
-class TrackPageViewCore extends Component {
+interface TrackPageViewCoreProperties extends RouteComponentProps {
+    tracker: TrackerProvider;
+}
 
+class TrackPageViewCore extends Component<TrackPageViewCoreProperties> {
     componentDidMount() {
         this.trackPageView();
     }
@@ -28,9 +32,7 @@ class TrackPageViewCore extends Component {
 const TrackPageViewWithRouter = withRouter(TrackPageViewCore);
 
 const TrackPageView = props => (
-    <Consumer>
-        {tracker => (<TrackPageViewWithRouter {...props} tracker={tracker} />)}
-    </Consumer>
+    <Consumer>{tracker => <TrackPageViewWithRouter {...props} tracker={tracker} />}</Consumer>
 );
 
 export default TrackPageView;

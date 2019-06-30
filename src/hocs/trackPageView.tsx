@@ -1,6 +1,7 @@
+import {ComponentType} from 'react';
 import TrackPageView from '../components/TrackPageView';
 
-export default ComponentIn => {
+export default (ComponentIn: ComponentType) => {
     const ComponentOut = props => (
         <TrackPageView>
             <ComponentIn {...props} />
