@@ -6,11 +6,11 @@ import {TrackerCollect, TrackerProvider, CollectLocation} from '../types';
 
 const createLazyProvider = (inner: TrackerProvider): TrackerProvider => {
     let installed: boolean = false;
-    const queue: [string, any][] = [];
+    const queue: Array<[keyof TrackerProvider, any]> = [];
 
-    const queueBeforeInstall = (name: string) => (...args: any) => {
+    const queueBeforeInstall = (name: keyof TrackerProvider) => (...args: any[]) => {
         if (installed) {
-            inner[name](...args);
+            (inner[name] as ((...args: any[]) => void))(...args);
         }
         else {
             queue.push([name, args]);
@@ -19,17 +19,17 @@ const createLazyProvider = (inner: TrackerProvider): TrackerProvider => {
 
     return {
         install() {
-            inner.install();
+            inner.install!();
             installed = true;
 
             for (const [name, args] of queue) {
-                inner[name](...args);
+                (inner[name] as ((...args: any[]) => void))(...args);
             }
 
             queue.length = 0;
         },
         uninstall() {
-            inner.uninstall();
+            inner.uninstall!();
             queue.length = 0;
         },
         trackPageView: queueBeforeInstall('trackPageView'),
@@ -38,19 +38,20 @@ const createLazyProvider = (inner: TrackerProvider): TrackerProvider => {
 };
 
 const createTrackerContext = (collect: TrackerCollect<CollectLocation>, provider: TrackerProvider): TrackerProvider => {
-    let currentLocation = null;
+    let currentLocation: CollectLocation = null as unknown as CollectLocation;
 
     return {
-        trackPageView(location, {path}) {
+        trackPageView(location, match) {
+            const path = match!.path;
             const referrer = currentLocation;
             currentLocation = {...location, path};
             const data = {
                 ...collect('pageView', location),
-                referrer: referrer,
+                referrer,
                 location: currentLocation,
             };
 
-            provider.trackPageView(data);
+            provider.trackPageView!(data);
         },
 
         trackEvent(event) {
@@ -59,7 +60,7 @@ const createTrackerContext = (collect: TrackerCollect<CollectLocation>, provider
                 ...event,
             };
 
-            provider.trackEvent(data);
+            provider.trackEvent!(data);
         },
     };
 };
@@ -70,8 +71,8 @@ interface TrackerProperties {
 }
 
 interface TrackerStates {
-    sourceProvider: TrackerProvider | null;
-    provider: TrackerProvider | null;
+    sourceProvider: TrackerProvider;
+    provider: TrackerProvider;
 }
 
 class Tracker extends Component<TrackerProperties, TrackerStates> {
@@ -81,15 +82,15 @@ class Tracker extends Component<TrackerProperties, TrackerStates> {
     };
 
     state = {
-        sourceProvider: null,
-        provider: null,
+        sourceProvider: null as unknown as TrackerProvider,
+        provider: null as unknown as TrackerProvider,
     };
 
     getTracker = createMemoizer(createTrackerContext);
 
     getProvider = createMemoizer(createLazyProvider);
 
-    static getDerivedStateFromProps({provider}, {sourceProvider}) {
+    static getDerivedStateFromProps({provider}: TrackerProperties, {sourceProvider}: TrackerStates) {
         if (provider === sourceProvider) {
             return null;
         }
@@ -103,23 +104,23 @@ class Tracker extends Component<TrackerProperties, TrackerStates> {
     componentDidMount() {
         const {provider} = this.state;
 
-        provider.install();
+        provider.install!();
     }
 
     /* istanbul ignore next line */
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: TrackerProperties) {
         const {provider} = this.props;
 
         if (provider !== prevProps.provider) {
-            prevProps.provider.uninstall();
-            provider.install();
+            prevProps.provider.uninstall!();
+            provider.install!();
         }
     }
 
     componentWillUnmount() {
         const {provider} = this.state;
 
-        provider.uninstall();
+        provider.uninstall!();
     }
 
     render() {

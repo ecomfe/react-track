@@ -12,7 +12,7 @@ const trackEventCallback = (
     action: string,
     label: string
 ) => (...args: unknown[]) => {
-    tracker.trackEvent({category, action, label});
+    tracker.trackEvent!({category, action, label});
 
     return previousPropValue(...args);
 };
@@ -37,7 +37,7 @@ export default class TrackEvent extends Component<TrackEventPropeties> {
         label: null,
     };
 
-    renderChildren(tracker) {
+    renderChildren(tracker: TrackerProvider) {
         const {children, eventPropName, category, action, label, ...args} = this.props;
 
         /* istanbul ignore next line */

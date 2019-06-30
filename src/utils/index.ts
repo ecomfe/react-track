@@ -3,6 +3,7 @@ const inputEquals = (prev: unknown[], current: unknown[]): boolean => {
         return false;
     }
 
+    // tslint:disable-next-line:no-increment-decrement
     for (let i = 0; i < prev.length; i++) {
         if (prev[i] !== current[i]) {
             return false;
@@ -17,8 +18,8 @@ declare type BasicFunction = (...args: any) => any;
 export const createMemoizer = <Select extends BasicFunction>(
     select: Select
 ): ((...input: any) => ReturnType<Select>) => {
-    let lastInput = null;
-    let lastResult = null;
+    let lastInput: any = null;
+    let lastResult: ReturnType<Select> = null as unknown as ReturnType<Select>;
 
     return (...input) => {
         if (!lastInput || !inputEquals(lastInput, input)) {

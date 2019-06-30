@@ -18,12 +18,12 @@ export const browser: CollectGenerator<BrowserReturnType> = () => {
                 height: screen.height,
             },
             os: {
-                family: os.family,
-                version: os.version,
+                family: os!.family,
+                version: os!.version,
             },
             browser: {
-                name: name,
-                version: version,
+                name,
+                version,
             },
             language: navigator.language,
         } as Browser;

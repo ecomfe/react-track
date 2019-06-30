@@ -5,7 +5,8 @@
 import {TrackerProvider} from '../types';
 
 export default (...providers: TrackerProvider[]): TrackerProvider => {
-    const chain = name => (...args) => providers.forEach(provider => provider[name](...args));
+    const chain = (name: keyof TrackerProvider) => (...args: any[]) =>
+        providers.forEach(provider => (provider[name] as (...args: any[]) => void)(...args));
 
     return {
         install: chain('install'),
