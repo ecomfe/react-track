@@ -18,15 +18,24 @@ export interface Browser {
     language: string;
 }
 
-export declare type CollectGenerator<Collection> = (...args: unknown[]) => TrackerCollect<Collection>;
+export declare type CollectGenerator<Collection> = (...args: any[]) => TrackerCollect<Collection>;
 
-export declare type TrackerCollect<Collection> = (...args: unknown[]) => Collection;
+export declare type TrackerCollect<Collection> = (...args: any[]) => Collection;
+
+export declare type TrackEventInProvider = (data: CollectEvent) => void;
+
+export declare type TrackPageViewInProvider = <Collect>(
+    data: CollectLocation & Collect,
+    match?: match & {path: string}
+) => void;
+
+export declare type TrackExecute = TrackEventInProvider | TrackPageViewInProvider;
 
 export interface TrackerProvider {
     install?: () => void;
     uninstall?: () => void;
-    trackEvent?: (data: CollectEvent) => void;
-    trackPageView?: <Collect>(data: CollectLocation & Collect, match?: match) => void;
+    trackEvent?: TrackEventInProvider;
+    trackPageView?: TrackPageViewInProvider;
 }
 
 export interface CollectLocation extends Location {

@@ -1,0 +1,10 @@
+{
+    "extends": "./node_modules/reskript/config/tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "noEmit": false,
+        "emitDeclarationOnly": true,
+        "declarationDir": "es",
+        "jsx": "react",
+    }
+}

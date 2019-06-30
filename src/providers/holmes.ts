@@ -8,20 +8,16 @@ import {TrackerProvider} from '../types';
 const HOLMES_SCRIPT_SRC: string = 'https://hm.baidu.com/hm.js';
 
 const formatURL = ({pathname, search, hash}: Location): string => {
-    const parts = [
-        pathname,
-        search ? '?' + search : '',
-        hash ? '#' + hash : '',
-    ];
+    const parts = [pathname, search ? '?' + search : '', hash ? '#' + hash : ''];
 
     return parts.join('');
 };
 
-declare type HMT = [string, ...unknown[]]
+declare type HMT = [string, ...unknown[]];
 declare const _hmt: HMT[];
 declare global {
-    interface Window { 
-        _hmt: HMT[]; 
+    interface Window {
+        _hmt: HMT[];
     }
 }
 
@@ -38,8 +34,7 @@ export default (site: string): TrackerProvider => {
             }
         },
 
-        uninstall() {
-        },
+        uninstall() {},
 
         trackPageView({location}) {
             _hmt.push(['_trackPageview', formatURL(location)]);
@@ -48,5 +43,5 @@ export default (site: string): TrackerProvider => {
         trackEvent({category, action, label}) {
             _hmt.push(['_trackEvent', category, action, label]);
         },
-    } as TrackerProvider ;
+    } as TrackerProvider;
 };
