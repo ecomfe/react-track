@@ -1,4 +1,4 @@
-const inputEquals = (prev, current) => {
+const inputEquals = (prev: unknown[], current: unknown[]): boolean => {
     if (prev.length !== current.length) {
         return false;
     }
@@ -12,7 +12,11 @@ const inputEquals = (prev, current) => {
     return true;
 };
 
-export const createMemoizer = select => {
+declare type BasicFunction = (...args: any) => any;
+
+export const createMemoizer = <Select extends BasicFunction>(
+    select: Select
+): ((...input: any) => ReturnType<Select>) => {
     let lastInput = null;
     let lastResult = null;
 

@@ -1,6 +1,9 @@
 import platform from 'platform';
+import {CollectGenerator, Browser} from '../types';
 
-export default () => {
+declare type BrowserReturnType = Browser | null;
+
+export const browser: CollectGenerator<BrowserReturnType> = () => {
     const {ua, name, version, os} = platform.parse(navigator.userAgent);
 
     return type => {
@@ -23,6 +26,8 @@ export default () => {
                 version: version,
             },
             language: navigator.language,
-        };
+        } as Browser;
     };
 };
+
+export default browser;

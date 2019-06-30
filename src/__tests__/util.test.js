@@ -1,5 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import {isFunction} from 'lodash';
-import {createMemoizer} from '../src/utils';
+import {createMemoizer} from '../utils';
 
 test('test createMemoizer', () => {
     const selectUser = ({a}, b, c) => ({a, b, c});

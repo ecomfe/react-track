@@ -4,8 +4,9 @@
  */
 
 import {noop} from 'lodash';
+import {TrackerProvider} from '../types';
 
-const provider = {
+const provider: TrackerProvider = {
     install: noop,
     uninstall: noop,
     trackPageView: noop,
