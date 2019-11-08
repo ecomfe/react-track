@@ -1,8 +1,8 @@
-import React from 'react';
+import {SFC} from 'react';
 import {Route, RouteProps} from 'react-router-dom';
 import TrackPageView from './TrackPageView';
 
-const TrackRoute = ({render, children, component, ...props}: RouteProps) => (
+const TrackRoute: SFC<RouteProps> = ({render, children, component, ...props}) => (
     <Route {...props}>
         <TrackPageView>
             <Route render={render} component={component}>

@@ -1,7 +1,5 @@
-/**
- * @file 百度统计的追踪实现
- * @author zhanglili
- */
+
+/* eslint-disable no-underscore-dangle */
 import {Location} from 'history';
 import {TrackerProvider} from '../types';
 
@@ -14,7 +12,7 @@ const formatURL = ({pathname, search, hash}: Location): string => {
 };
 
 declare type HMT = [string, ...unknown[]];
-declare const _hmt: HMT[];
+declare const _hmt: HMT[]; // eslint-disable-line init-declarations
 declare global {
     interface Window {
         _hmt: HMT[];
@@ -33,13 +31,11 @@ export default (site: string): TrackerProvider => {
                 document.head.appendChild(script);
             }
         },
-
-        uninstall() {},
-
+        uninstall() { // eslint-disable-line @typescript-eslint/no-empty-function
+        },
         trackPageView({location}) {
             _hmt.push(['_trackPageview', formatURL(location)]);
         },
-
         trackEvent({category, action, label}) {
             _hmt.push(['_trackEvent', category, action, label]);
         },
