@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import {CollectGenerator} from '../types';
+import {TrackerCollect} from '../types';
 
 const getSessionKey = (key: string): string => {
     const storedValue = sessionStorage.getItem(key);
@@ -13,12 +13,6 @@ const getSessionKey = (key: string): string => {
     return newValue;
 };
 
-interface Session {
-    session: string;
-}
-
-const session: CollectGenerator<Session> = (key: string = 'trackingVisitorSession') => () => ({
-    session: getSessionKey(key),
-});
+const session = (key: string = 'trackingVisitorSession'): TrackerCollect => () => ({session: getSessionKey(key)});
 
 export default session;

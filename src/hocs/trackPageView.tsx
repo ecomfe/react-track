@@ -1,7 +1,7 @@
-import React, {ComponentType} from 'react';
+import {ComponentType, SFC} from 'react';
 import TrackPageView from '../components/TrackPageView';
 
-export default (ComponentIn: ComponentType) => {
+export default function wrap<P>(ComponentIn: ComponentType<P>): SFC<P> {
     const ComponentOut = (props: any) => (
         <TrackPageView>
             <ComponentIn {...props} />
@@ -11,4 +11,4 @@ export default (ComponentIn: ComponentType) => {
     ComponentOut.displayName = `trackPageView(${ComponentIn.displayName || ComponentIn.name || 'Unknown'})`;
 
     return ComponentOut;
-};
+}

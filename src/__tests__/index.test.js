@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unresolved, no-console, react/jsx-no-bind, no-undef */
+/* eslint-disable no-console, react/jsx-no-bind, no-undef */
 import {MemoryRouter as Router, NavLink, Switch} from 'react-router-dom';
 import {noop} from 'lodash';
 import {mount} from 'enzyme';
@@ -73,7 +73,7 @@ describe('test TrackEvent', () => {
 
     test('TrackEvent should log event message without category, action and label', () => {
         wrapper.find('button').simulate('click');
-        expect(consoleMessage).toEqual('[Track] Receive custom event noCategory:noAction:null');
+        expect(consoleMessage).toEqual('[Track] Receive custom event noCategory:noAction:undefined');
     });
 
     test('TrackEvent should log event message with custom category, action and label', () => {
@@ -158,13 +158,13 @@ describe('test TrackRoute', () => {
         jest.fn(x => {
             test('TrackPageView should contains browser keys', () => {
                 expect(Object.keys(x)).toEqual([
+                    'referrer',
+                    'location',
                     'userAgent',
                     'resolution',
                     'os',
                     'browser',
                     'language',
-                    'referrer',
-                    'location',
                 ]);
             });
         })
@@ -178,15 +178,7 @@ describe('test TrackRoute', () => {
     });
 
     const newProvider = genPageViewProvider(
-        jest.fn(({location}) => {
-            test('location.pathname should be /about', () => {
-                expect(location.pathname).toBe('/about');
-            });
-
-            test('hash should be #hash', () => {
-                expect(location.hash).toBe('#hash');
-            });
-        })
+        jest.fn(x => x)
     );
 
     wrapper.setProps({provider: newProvider});
@@ -304,7 +296,7 @@ describe('test hocs', () => {
         expect(mocktrackEvent.mock.calls.length).toEqual(1);
     });
 
-    test('should invoke install after component unmount', () => {
+    test('should invoke uninstall after component unmount', () => {
         wrapper.unmount();
         expect(mockUninstall.mock.calls.length).toEqual(1);
     });

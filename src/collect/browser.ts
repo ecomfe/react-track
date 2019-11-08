@@ -1,14 +1,11 @@
 import platform from 'platform';
-import {CollectGenerator, Browser} from '../types';
+import {CollectType, TrackerCollect} from '../types';
 
-declare type BrowserReturnType = Browser | null;
-
-export const browser: CollectGenerator<BrowserReturnType> = () => {
+export const browser = (): TrackerCollect => {
     const {ua, name, version, os} = platform.parse(navigator.userAgent);
-
-    return type => {
+    return (type: CollectType) => {
         if (type !== 'pageView') {
-            return null;
+            return {};
         }
 
         return {
@@ -26,7 +23,7 @@ export const browser: CollectGenerator<BrowserReturnType> = () => {
                 version,
             },
             language: navigator.language,
-        } as Browser;
+        };
     };
 };
 

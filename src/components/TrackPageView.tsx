@@ -1,38 +1,21 @@
-import React, {Component} from 'react';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {Consumer} from './TrackerContext';
-import {TrackerProvider, CollectLocation} from '../types';
+import {useEffect, SFC, ReactElement} from 'react';
+import {useRouteMatch, useLocation} from 'react-router-dom';
+import {useTrackPageView} from '../context';
 
-interface TrackPageViewCoreProperties extends RouteComponentProps {
-    tracker: TrackerProvider;
+export interface TrackPageViewProps {
+    children: ReactElement;
 }
 
-class TrackPageViewCore extends Component<TrackPageViewCoreProperties> {
-    componentDidMount() {
-        this.trackPageView();
-    }
+const TrackPageView: SFC<TrackPageViewProps> = ({children}) => {
+    const trackPageView = useTrackPageView();
+    const {path} = useRouteMatch();
+    const location = useLocation();
+    useEffect(
+        () => trackPageView(location, {path}),
+        [location, path, trackPageView]
+    );
 
-    componentDidUpdate(prevProps: TrackPageViewCoreProperties) {
-        if (prevProps.location !== this.props.location) {
-            this.trackPageView();
-        }
-    }
-
-    trackPageView() {
-        const {location, match, tracker} = this.props;
-
-        tracker.trackPageView!(location as CollectLocation, match);
-    }
-
-    render() {
-        return this.props.children;
-    }
-}
-
-const TrackPageViewWithRouter = withRouter(TrackPageViewCore);
-
-const TrackPageView = (props: any) => (
-    <Consumer>{tracker => <TrackPageViewWithRouter {...props} tracker={tracker} />}</Consumer>
-);
+    return children;
+};
 
 export default TrackPageView;

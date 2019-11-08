@@ -1,51 +1,34 @@
-import {Location} from 'history';
-import {match} from 'react-router';
+import * as history from 'history';
 
-export interface Browser {
-    userAgent: string;
-    resolution: {
-        width: number;
-        height: number;
-    };
-    os: {
-        family: string;
-        version: string;
-    };
-    browser: {
-        name: string;
-        version: string;
-    };
-    language: string;
+export type Location = history.Location & {path: string};
+
+export type CollectType = 'pageView' | 'event';
+
+export interface TrackerCollect {
+    (type: 'pageView', location: Location): {[key: string]: any};
+    (type: 'event'): {[key: string]: any};
 }
 
-export declare type CollectGenerator<Collection> = (...args: any[]) => TrackerCollect<Collection>;
-
-export declare type TrackerCollect<Collection> = (...args: any[]) => Collection;
-
-export declare type TrackEventInProvider = (data: CollectEvent) => void;
-
-export declare type TrackPageViewInProvider = <Collect>(
-    data: CollectLocation & Collect,
-    match?: match & {path: string}
-) => void;
-
-export declare type TrackExecute = TrackEventInProvider | TrackPageViewInProvider;
-
-export interface TrackerProvider {
-    install?: () => void;
-    uninstall?: () => void;
-    trackEvent?: TrackEventInProvider;
-    trackPageView?: TrackPageViewInProvider;
+export interface PageView {
+    location: Location;
+    referrer: Location | null;
+    [key: string]: any;
 }
 
-export interface CollectLocation extends Location {
-    path?: string;
-    location: CollectLocation;
-    referrer: CollectLocation;
-}
-
-export interface CollectEvent {
+export interface Event {
     category: string;
     action: string;
     label?: string;
+}
+
+export interface TrackerProvider {
+    install(): void;
+    uninstall(): void;
+    trackEvent(payload: Event): void;
+    trackPageView(payload: PageView): void;
+}
+
+export interface TrackerContext {
+    trackPageView(location: Location, match: {path: string}): void;
+    trackEvent(event: Event): void;
 }

@@ -4,9 +4,9 @@
  */
 
 import {noop} from 'lodash';
-import {CollectLocation, TrackerProvider} from '../types';
+import {Location, TrackerProvider} from '../types';
 
-const formatURL = ({pathname, search, hash, path}: CollectLocation): string => {
+const formatURL = ({pathname, search, hash, path}: Location): string => {
     const parts = [
         pathname,
         search ? '?' + search : '',

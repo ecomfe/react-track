@@ -1,5 +1,5 @@
-import {CollectGenerator} from '../types';
+import {TrackerCollect} from '../types';
 
-const context: CollectGenerator<any> = context => () => context;
+const context = <T>(context: T): TrackerCollect => () => context;
 
 export default context;

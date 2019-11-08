@@ -1,14 +1,23 @@
-import React, {ComponentType} from 'react';
-import TrackEvent, {TrackEventPropeties} from '../components/TrackEvent';
+import {ComponentType, SFC} from 'react';
+import TrackEvent from '../components/TrackEvent';
+import {Event} from '../types';
 
-export default ({...trackEventProps}: TrackEventPropeties) => (ComponentIn: ComponentType) => {
-    const ComponentOut = (props: any) => (
-        <TrackEvent {...trackEventProps}>
-            <ComponentIn {...props} />
-        </TrackEvent>
-    );
+export interface TrackEventOptions extends Event {
+    eventPropName: string;
+}
 
-    ComponentOut.displayName = `trackEvent(${ComponentIn.displayName || ComponentIn.name || 'Unknown'})`;
+export default (options: TrackEventOptions) => {
+    function wrap<P>(ComponentIn: ComponentType<P>): SFC<P> {
+        const ComponentOut = (props: P) => (
+            <TrackEvent {...options}>
+                <ComponentIn {...props} />
+            </TrackEvent>
+        );
 
-    return ComponentOut;
+        ComponentOut.displayName = `trackEvent(${ComponentIn.displayName || ComponentIn.name || 'Unknown'})`;
+
+        return ComponentOut;
+    }
+
+    return wrap;
 };
