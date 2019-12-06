@@ -29,6 +29,6 @@ export interface TrackerProvider {
 }
 
 export interface TrackerContext {
-    trackPageView(location: Location, match: {path: string}): void;
+    trackPageView(location: history.Location, match: {path: string}): void;
     trackEvent(event: Event): void;
 }
