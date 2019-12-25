@@ -228,6 +228,22 @@ const NavItem = ({name, to}) => (
 );
 ```
 
+### hooks
+
+```jsx
+const Item = ({name, onClick}) => {
+    const trackEvent = useTrackEvent();
+    const handleClick = useCallback(
+        e => {
+            trackEvent({category: 'navigation', action: 'click', label: name});
+            onClick(e)
+        },
+        [name]
+    )
+    return <Button onClick={handleClick}>Click Me</Button>
+};           
+```
+
 ### 高阶组件
 
 `react-track`同时提供了`trackEvent`高阶组件，用于直接在一个现有组件上添加事件采集的能力。在希望采集多个事件时，与`recompose`一起配合能取得更好的代码可读性：
