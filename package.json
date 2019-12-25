@@ -29,11 +29,12 @@
     "lint": "skr lint && tsc",
     "test": "skr test --target=react --coverage",
     "start": "skr dev --src=demo",
-    "build": "skr rollup --clean",
+    "build": "skr rollup --clean --mode=development",
     "report-cov": "cat coverage/lcov.info | coveralls",
     "ci": "yarn test && yarn run build",
     "prepublishOnly": "yarn run ci",
-    "lint-staged": "skr lint --staged"
+    "lint-staged": "skr lint --staged",
+    "deploy": "npm publish --registry=https://registry.npmjs.com"
   },
   "husky": {
     "hooks": {
