@@ -16,6 +16,7 @@ import {
     holmes,
     trackEvent,
     trackPageView,
+    basename,
 } from '..';
 
 let consoleMessage = '';
@@ -110,7 +111,7 @@ describe('test combineCollects and combineProvider', () => {
             });
         })
     );
-    const collect = combineCollects(browser(), context({env: 'test'}), session());
+    const collect = combineCollects(browser(), context({env: 'test'}), session(), basename('chen'));
     const provider = composeProvider(print(), customProvider, installProvider, uninstallProvider);
 
     const wrapper = mount(<TrackEventComponent collect={collect} provider={provider} />);
@@ -299,5 +300,14 @@ describe('test hocs', () => {
     test('should invoke uninstall after component unmount', () => {
         wrapper.unmount();
         expect(mockUninstall.mock.calls.length).toEqual(1);
+    });
+});
+
+describe('test basename', () => {
+    test('should return correct pathname', () => {
+        const collect = basename('/hi');
+        const res = collect('pageView', {pathname: '/track'});
+        const exp = {location: {pathname: '/hi/track'}};
+        expect(res).toEqual(exp);
     });
 });
