@@ -12,6 +12,7 @@ export const basename = (name: string): TrackerCollect => {
             location: {
                 ...location,
                 pathname: prefix + location.pathname,
+                path: prefix + location.path,
             },
         };
     };

@@ -304,10 +304,18 @@ describe('test hocs', () => {
 });
 
 describe('test basename', () => {
-    test('should return correct pathname', () => {
+    test('should return correct pathname & path', () => {
         const collect = basename('/hi');
-        const res = collect('pageView', {pathname: '/track'});
-        const exp = {location: {pathname: '/hi/track'}};
+        const res = collect('pageView', {
+            pathname: '/track/10',
+            path: '/track/:id',
+        });
+        const exp = {
+            location: {
+                pathname: '/hi/track/10',
+                path: '/hi/track/:id',
+            },
+        };
         expect(res).toEqual(exp);
     });
 });
