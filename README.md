@@ -121,7 +121,7 @@ const post = url => {
 };
 
 const trackProvider = process.env.NODE_ENV === 'production'
-	? composeTracker(
+	? composeProvider(
 		post('http://127.88.88.88:8888/v1/log'),
 		holmes(mySiteID)
     )
