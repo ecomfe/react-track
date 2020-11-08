@@ -1,4 +1,4 @@
-import {ComponentType, SFC} from 'react';
+import React, {ComponentType, FC} from 'react';
 import TrackEvent from '../components/TrackEvent';
 import {Event} from '../types';
 
@@ -7,7 +7,7 @@ export interface TrackEventOptions extends Event {
 }
 
 export default (options: TrackEventOptions) => {
-    function wrap<P>(ComponentIn: ComponentType<P>): SFC<P> {
+    function wrap<P>(ComponentIn: ComponentType<P>): FC<P> {
         const ComponentOut = (props: P) => (
             <TrackEvent {...options}>
                 <ComponentIn {...props} />

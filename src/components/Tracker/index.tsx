@@ -1,4 +1,4 @@
-import {SFC, useRef, useEffect, useMemo} from 'react';
+import React, {FC, useRef, useEffect, useMemo} from 'react';
 import {TrackerCollect, TrackerProvider, Location, PageView, Event, TrackerContext} from '../../types';
 import {Provider} from '../../context';
 import {useSafeTrackerProvider} from './hooks';
@@ -8,7 +8,7 @@ export interface TrackerProps {
     provider: TrackerProvider;
 }
 
-const Tracker: SFC<TrackerProps> = ({collect, provider, children}) => {
+const Tracker: FC<TrackerProps> = ({collect, provider, children}) => {
     const safeProvider = useSafeTrackerProvider(provider);
     const currentLocation = useRef<Location | null>(null);
     const trackerContext = useMemo(

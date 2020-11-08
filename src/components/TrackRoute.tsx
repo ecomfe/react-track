@@ -1,4 +1,4 @@
-import {Suspense, SFC, ComponentType} from 'react';
+import React, {Suspense, FC, ComponentType} from 'react';
 import {Route, RouteProps} from 'react-router-dom';
 import TrackPageView from './TrackPageView';
 
@@ -6,7 +6,7 @@ const lazyComponentMapping = new WeakMap<ComponentType, ComponentType>();
 
 const mapToLazyComponent = (ComponentIn: ComponentType) => {
     if (!lazyComponentMapping.has(ComponentIn)) {
-        const ComponentOut: SFC = props => (
+        const ComponentOut: FC = props => (
             <Suspense fallback={null}>
                 <ComponentIn {...props} />
             </Suspense>
@@ -21,7 +21,7 @@ interface Props extends RouteProps {
     wrapSuspense?: boolean;
 }
 
-const TrackRoute: SFC<Props> = ({render, children, component, wrapSuspense = false, ...props}) => {
+const TrackRoute: FC<Props> = ({render, children, component, wrapSuspense = false, ...props}) => {
     const componentPropValue = (wrapSuspense && component) ? mapToLazyComponent(component as ComponentType) : component;
     return (
         <Route {...props}>

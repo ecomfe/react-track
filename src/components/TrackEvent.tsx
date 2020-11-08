@@ -1,4 +1,4 @@
-import {cloneElement, ReactElement, useCallback, SFC, useMemo} from 'react';
+import {cloneElement, ReactElement, useCallback, FC, useMemo} from 'react';
 import {Event} from '../types';
 import {useTrackEvent} from '../context';
 
@@ -8,7 +8,7 @@ export interface TrackEventProps extends Event {
     events?: {[key: string]: Function};
 }
 
-const TrackEvent: SFC<TrackEventProps> = ({eventPropName, category, action, label, events, children}) => {
+const TrackEvent: FC<TrackEventProps> = ({eventPropName, category, action, label, events, children}) => {
     const trackEvent = useTrackEvent();
     const eventProp = children.props[eventPropName];
     const wrappedEventProp = useCallback(

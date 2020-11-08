@@ -10,9 +10,9 @@ export interface TrackerCollect {
 }
 
 export interface PageView {
+    [key: string]: any;
     location: Location;
     referrer: Location | null;
-    [key: string]: any;
 }
 
 export interface Event {
