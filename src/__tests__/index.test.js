@@ -1,6 +1,6 @@
 /* eslint-disable no-console, react/jsx-no-bind, no-undef */
 import {MemoryRouter as Router, NavLink, Switch} from 'react-router-dom';
-import {noop} from 'lodash';
+import noop from 'lodash/noop';
 import {mount} from 'enzyme';
 import 'mock-local-storage';
 import {

@@ -3,7 +3,7 @@
  * @author zhanglili
  */
 
-import {noop} from 'lodash';
+import noop from 'lodash/noop';
 import {Location, TrackerProvider} from '../types';
 
 const formatURL = ({pathname, search, hash, path}: Location): string => {

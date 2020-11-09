@@ -1,6 +1,6 @@
 import {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {noop} from 'lodash';
+import noop from 'lodash/noop';
 import {trackEvent} from '../../../src';
 
 const Input = trackEvent({

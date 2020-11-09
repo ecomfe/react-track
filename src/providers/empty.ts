@@ -3,7 +3,7 @@
  * @author zhanglili
  */
 
-import {noop} from 'lodash';
+import noop from 'lodash/noop';
 import {TrackerProvider} from '../types';
 
 const provider: TrackerProvider = {

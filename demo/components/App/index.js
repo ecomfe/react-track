@@ -2,7 +2,7 @@
 import {PureComponent} from 'react';
 import {BrowserRouter, NavLink, Switch, Route} from 'react-router-dom';
 import {compose} from 'recompose';
-import {noop} from 'lodash';
+import noop from 'lodash/noop';
 import {Tracker, TrackRoute, TrackEvent, trackEvent, combineCollects, browser, context, session} from '../../../src';
 import AboutMe from '../AboutMe';
 import Console from '../Console';
