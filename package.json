@@ -23,7 +23,7 @@
   ],
   "types": "./es/index.d.ts",
   "sideEffects": false,
-  "main": "cjs/index.js",
+  "main": "es/index.js",
   "module": "es/index.js",
   "scripts": {
     "lint": "skr lint && tsc",
