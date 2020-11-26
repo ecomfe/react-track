@@ -304,18 +304,35 @@ describe('test hocs', () => {
 });
 
 describe('test basename', () => {
-    test('should return correct pathname & path', () => {
+    const exp = {
+        location: {
+            pathname: '/hi/track/10',
+            path: '/hi/track/:id',
+        },
+    };
+
+    test('should return correct pathname & path when receiving a full basename', () => {
         const collect = basename('/hi');
         const res = collect('pageView', {
             pathname: '/track/10',
             path: '/track/:id',
         });
-        const exp = {
-            location: {
-                pathname: '/hi/track/10',
-                path: '/hi/track/:id',
-            },
-        };
+        expect(res).toEqual(exp);
+    });
+    test('should return correct pathname & path when receiving a basename which starts without /', () => {
+        const collect = basename('hi');
+        const res = collect('pageView', {
+            pathname: '/track/10',
+            path: '/track/:id',
+        });
+        expect(res).toEqual(exp);
+    });
+    test('should return correct pathname & path when receiving a empty string', () => {
+        const collect = basename('');
+        const res = collect('pageView', {
+            pathname: '/hi/track/10',
+            path: '/hi/track/:id',
+        });
         expect(res).toEqual(exp);
     });
 });

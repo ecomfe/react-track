@@ -1,7 +1,8 @@
 import {CollectType, Location, TrackerCollect} from '../types';
 
 export const basename = (name: string): TrackerCollect => {
-    const prefix = name.startsWith('/') ? name : '/' + name;
+    // only process when receiving a non-empty string which starts without /
+    const prefix = /^[^/]/.test(name) ? '/' + name : name;
 
     return (type: CollectType, location?: Location) => {
         if (type !== 'pageView' || !location) {
