@@ -1,50 +1,21 @@
-import React, {FC, useRef, useEffect, useMemo} from 'react';
-import {TrackerCollect, TrackerProvider, Location, PageView, Event, TrackerContext} from '../../types';
-import {Provider} from '../../context';
-import {useSafeTrackerProvider} from './hooks';
+import {FC, ComponentProps} from 'react';
+import ConfigProvider, {useTrackConfig} from './ConfigProvider';
+import TrackProvider, {useTrackEvent, useTrackPageView} from './TrackProvider';
 
-export interface TrackerProps {
-    collect: TrackerCollect;
-    provider: TrackerProvider;
-}
+type Props = ComponentProps<typeof ConfigProvider> & ComponentProps<typeof TrackProvider>;
 
-const Tracker: FC<TrackerProps> = ({collect, provider, children}) => {
-    const safeProvider = useSafeTrackerProvider(provider);
-    const currentLocation = useRef<Location | null>(null);
-    const trackerContext = useMemo(
-        (): TrackerContext => {
-            return {
-                trackPageView(location, match) {
-                    const path = match.path;
-                    const referrer = currentLocation.current;
-                    currentLocation.current = {...location, path};
-                    const data: PageView = {
-                        referrer,
-                        location: currentLocation.current,
-                        ...collect('pageView', currentLocation.current),
-                    };
-                    safeProvider.trackPageView(data);
-                },
-                trackEvent(event) {
-                    const data: Event = {
-                        ...collect('event'),
-                        ...event,
-                    };
-                    safeProvider.trackEvent(data);
-                },
-            };
-        },
-        [safeProvider, collect]
-    );
-    useEffect(
-        () => {
-            safeProvider.install();
-            return () => safeProvider.uninstall();
-        },
-        [safeProvider]
-    );
-
-    return <Provider value={trackerContext}>{children}</Provider>;
-};
+const Tracker: FC<Props> = ({collect, provider, children, ...props}) => (
+    <ConfigProvider {...props}>
+        <TrackProvider collect={collect} provider={provider}>
+            {children}
+        </TrackProvider>
+    </ConfigProvider>
+);
 
 export default Tracker;
+
+export {
+    useTrackConfig,
+    useTrackEvent,
+    useTrackPageView,
+};

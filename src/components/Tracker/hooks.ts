@@ -1,5 +1,5 @@
 import {useRef, useMemo} from 'react';
-import {TrackerProvider, Event, PageView} from '../../types';
+import {TrackerProvider, Event, PageView} from '../../interface';
 
 const usePreviousValue = <T>(value: T): T => {
     const previous = useRef(value);

@@ -1,35 +1,48 @@
-import React, {Suspense, FC, ComponentType} from 'react';
-import {Route, RouteProps} from 'react-router-dom';
+import {FC, createContext, ReactElement, useContext} from 'react';
+import {Route, RouteProps, useRouteMatch} from 'react-router-dom';
+import {TrackConfig} from '../interface';
+import {useTrackConfig} from './Tracker';
 import TrackPageView from './TrackPageView';
 
-const lazyComponentMapping = new WeakMap<ComponentType, ComponentType>();
+const Context = createContext<string | null>(null);
+Context.displayName = 'TrackRouteContext';
 
-const mapToLazyComponent = (ComponentIn: ComponentType) => {
-    if (!lazyComponentMapping.has(ComponentIn)) {
-        const ComponentOut: FC = props => (
-            <Suspense fallback={null}>
-                <ComponentIn {...props} />
-            </Suspense>
-        );
-        ComponentOut.displayName = `withSuspense(${ComponentIn.displayName || ComponentIn.name || 'Unknown'})`;
-        lazyComponentMapping.set(ComponentIn, ComponentOut);
-    }
-    return lazyComponentMapping.get(ComponentIn);
-};
-
-interface Props extends RouteProps {
-    wrapSuspense?: boolean;
+interface GuardProps extends Partial<TrackConfig> {
+    warnNested: boolean;
+    children: ReactElement;
 }
 
-const TrackRoute: FC<Props> = ({render, children, component, wrapSuspense = false, ...props}) => {
-    const componentPropValue = (wrapSuspense && component) ? mapToLazyComponent(component as ComponentType) : component;
+const TrackRouteNestingGuard: FC<GuardProps> = ({warnNested, children}) => {
+    const possibleParent = useContext(Context);
+    const {path} = useRouteMatch();
+
+    if (warnNested && possibleParent !== null) {
+        console.warn(`A TrackRoute (${path}) is nested inside another TrackRoute (${possibleParent})`);
+    }
+
     return (
-        <Route {...props}>
-            <TrackPageView>
-                <Route render={render} component={componentPropValue}>
-                    {children}
-                </Route>
-            </TrackPageView>
+        <Context.Provider value={path}>
+            {children}
+        </Context.Provider>
+    );
+};
+
+type Props = RouteProps & Partial<TrackConfig>;
+
+const TrackRoute: FC<Props> = props => {
+    const {reportPageViewOnLeafOnly, warnNestedTrackRoute, render, children, component, ...routeDefinition} = props;
+    const contextConfig = useTrackConfig();
+    const config: TrackConfig = {...contextConfig, ...props};
+
+    return (
+        <Route {...routeDefinition}>
+            <TrackRouteNestingGuard warnNested={config.warnNestedTrackRoute}>
+                <TrackPageView disabled={config.reportPageViewOnLeafOnly && !!props.children}>
+                    <Route render={render} component={component} {...routeDefinition}>
+                        {children}
+                    </Route>
+                </TrackPageView>
+            </TrackRouteNestingGuard>
         </Route>
     );
 };

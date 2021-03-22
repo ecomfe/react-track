@@ -1,4 +1,4 @@
-import {TrackerCollect, CollectType, Location} from '../types';
+import {TrackerCollect, CollectType, Location} from '../interface';
 
 const combineCollect = (...collects: TrackerCollect[]): TrackerCollect => {
     return (type: CollectType, location?: Location) => collects.reduce(

@@ -1,18 +1,23 @@
 import {useEffect, FC, ReactElement} from 'react';
 import {useRouteMatch, useLocation} from 'react-router-dom';
-import {useTrackPageView} from '../context';
+import {useTrackPageView} from './Tracker';
 
-export interface TrackPageViewProps {
+interface Props {
+    disabled?: boolean;
     children: ReactElement;
 }
 
-const TrackPageView: FC<TrackPageViewProps> = ({children}) => {
+const TrackPageView: FC<Props> = ({disabled = false, children}) => {
     const trackPageView = useTrackPageView();
     const {path} = useRouteMatch();
     const location = useLocation();
     useEffect(
-        () => trackPageView(location, {path}),
-        [location, path, trackPageView]
+        () => {
+            if (!disabled) {
+                trackPageView(location, {path});
+            }
+        },
+        [location, path, trackPageView, disabled]
     );
 
     return children;

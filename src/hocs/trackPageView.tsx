@@ -1,4 +1,4 @@
-import React, {ComponentType, FC} from 'react';
+import {ComponentType, FC} from 'react';
 import TrackPageView from '../components/TrackPageView';
 
 export default function wrap<P>(ComponentIn: ComponentType<P>): FC<P> {

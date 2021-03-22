@@ -1,6 +1,0 @@
-language: node_js
-node_js:
-  - node
-script: yarn run ci
-after_script:
-  - yarn run report-cov

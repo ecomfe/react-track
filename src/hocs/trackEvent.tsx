@@ -1,6 +1,6 @@
-import React, {ComponentType, FC} from 'react';
+import {ComponentType, FC} from 'react';
 import TrackEvent from '../components/TrackEvent';
-import {Event} from '../types';
+import {Event} from '../interface';
 
 export interface TrackEventOptions extends Event {
     eventPropName: string;

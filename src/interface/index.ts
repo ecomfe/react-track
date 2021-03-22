@@ -32,3 +32,8 @@ export interface TrackerContext {
     trackPageView(location: history.Location, match: {path: string}): void;
     trackEvent(event: Event): void;
 }
+
+export interface TrackConfig {
+    reportPageViewOnLeafOnly: boolean;
+    warnNestedTrackRoute: boolean;
+}

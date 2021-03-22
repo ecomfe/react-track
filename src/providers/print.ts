@@ -4,7 +4,7 @@
  */
 
 import noop from 'lodash/noop';
-import {Location, TrackerProvider} from '../types';
+import {Location, TrackerProvider} from '../interface';
 
 const formatURL = ({pathname, search, hash, path}: Location): string => {
     const parts = [

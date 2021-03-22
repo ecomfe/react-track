@@ -1,11 +1,12 @@
 import {cloneElement, ReactElement, useCallback, FC, useMemo} from 'react';
-import {Event} from '../types';
-import {useTrackEvent} from '../context';
+import {Event} from '../interface';
+import {useTrackEvent} from './Tracker';
 
 export interface TrackEventProps extends Event {
     eventPropName: string;
     children: ReactElement;
-    events?: {[key: string]: Function};
+    // 这东西用于`TrackEvent`嵌套的内部实现，对外不使用
+    events?: {[key: string]: Function}; // eslint-disable-line @typescript-eslint/ban-types
 }
 
 const TrackEvent: FC<TrackEventProps> = ({eventPropName, category, action, label, events, children}) => {

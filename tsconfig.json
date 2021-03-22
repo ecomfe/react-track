@@ -3,7 +3,7 @@
         "src"
     ],
     "compilerOptions": {
-        "jsx": "react",
+        "jsx": "react-jsx",
         "module": "CommonJS",
         "target": "ES2018",
         "allowJs": false,

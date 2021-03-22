@@ -31,6 +31,13 @@
 - `{Function} collect`：定义如何采集和组装需要记录的数据。
 - `{Object} provider`：定义如何将数据记录下来或发送至指定服务。
 
+并且支持以下可选配置：
+
+- `{boolean} reportPageViewOnLeafOnly`：仅让作为叶子节点的`TrackRoute`组件报告PV，如果一个`TrackRoute`在`children`属性，则不作为叶子节点处理。该配置默认关闭。
+- `{boolean} warnNestedTrackRoute`：当一个`TrackRoute`在另一个`TrackRoute`里面时，在控制台打印一个警告信息，用于检查一些不符合预期的路由嵌套。该配置默认打开。
+
+以上2个属性也可以直接用于`TrackRoute`组件上，以覆盖`Tracker`组件配置的默认值。
+
 ### 定义数据采集
 
 在`Tracker`组件中，`collect`属性用来定义“采集哪些数据”以及“数据的最终结构”。`connect`是一个函数，其签名如下：
@@ -111,7 +118,7 @@ import axios from 'axios';
 
 const post = url => {
     const send = type => data => axios.post(url, {type, ...data});
-    
+
     return {
         install: noop,
         uninstall: noop,
@@ -243,7 +250,7 @@ const Item = ({name, onClick}) => {
         [name]
     )
     return <Button onClick={handleClick}>Click Me</Button>
-};           
+};
 ```
 
 ### 高阶组件
@@ -268,7 +275,7 @@ const track = action => {
         action: action,
         label: null
     };
-    
+
     return trackEvent(options);
 };
 

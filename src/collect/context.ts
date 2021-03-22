@@ -1,4 +1,4 @@
-import {TrackerCollect} from '../types';
+import {TrackerCollect} from '../interface';
 
 const context = <T>(context: T): TrackerCollect => () => context;
 

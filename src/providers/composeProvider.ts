@@ -2,7 +2,7 @@
  * @file 将多个Provider合并为一个
  * @author zhanglili
  */
-import {TrackerProvider} from '../types';
+import {TrackerProvider} from '../interface';
 
 export default (...providers: TrackerProvider[]): TrackerProvider => {
     const chain = (name: keyof TrackerProvider) => (...args: any[]) =>

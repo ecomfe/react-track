@@ -1,5 +1,5 @@
 import platform from 'platform';
-import {CollectType, TrackerCollect} from '../types';
+import {CollectType, TrackerCollect} from '../interface';
 
 export const browser = (): TrackerCollect => {
     const {ua, name, version, os} = platform.parse(navigator.userAgent);

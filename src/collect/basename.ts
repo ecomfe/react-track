@@ -1,4 +1,4 @@
-import {CollectType, Location, TrackerCollect} from '../types';
+import {CollectType, Location, TrackerCollect} from '../interface';
 
 export const basename = (name: string): TrackerCollect => {
     // only process when receiving a non-empty string which starts without /

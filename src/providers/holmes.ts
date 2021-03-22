@@ -1,7 +1,7 @@
 
 /* eslint-disable no-underscore-dangle */
 import {Location} from 'history';
-import {TrackerProvider} from '../types';
+import {TrackerProvider} from '../interface';
 
 const HOLMES_SCRIPT_SRC: string = 'https://hm.baidu.com/hm.js';
 

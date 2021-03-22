@@ -4,7 +4,7 @@
  */
 
 import noop from 'lodash/noop';
-import {TrackerProvider} from '../types';
+import {TrackerProvider} from '../interface';
 
 const provider: TrackerProvider = {
     install: noop,

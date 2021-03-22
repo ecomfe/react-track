@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import {TrackerCollect} from '../types';
+import {TrackerCollect} from '../interface';
 
 const getSessionKey = (key: string): string => {
     const storedValue = sessionStorage.getItem(key);

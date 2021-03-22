@@ -117,7 +117,7 @@ export default class App extends PureComponent {
                                     </div>
                                 </div>
                             </TrackRoute>
-                            <TrackRoute exact path="/console" component={Console} />
+                            <TrackRoute path="/console" component={Console} />
                             <TrackRoute exact path="/service" render={() => <Service />} />
                             <Route exact path="/about" component={AboutMe} />
                         </Switch>
