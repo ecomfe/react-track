@@ -15,6 +15,6 @@
         "declaration": true,
         "baseUrl": ".",
         "rootDir": "src",
-        "outDir": "dist"
+        "outDir": "cjs"
     }
 }

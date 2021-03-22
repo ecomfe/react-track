@@ -31,7 +31,7 @@
     "start": "skr dev --src=demo",
     "build": "rm -rf es cjs && tsc & tsc --module ESNext --outDir ./es",
     "report-cov": "cat coverage/lcov.info | coveralls",
-    "ci": "yarn test && yarn run build",
+    "ci": "yarn run build",
     "prepublishOnly": "yarn run ci",
     "lint-staged": "skr lint --staged",
     "deploy": "npm publish --registry=https://registry.npmjs.com"
